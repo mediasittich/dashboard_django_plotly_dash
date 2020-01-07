@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'channels',
+
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+
     'home.apps.HomeConfig',
 ]
 
@@ -50,8 +52,13 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'django_plotly_dash.middleware.BaseMiddleware',
+
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 ROOT_URLCONF = 'dashboard_project.urls'
 
@@ -172,8 +179,20 @@ STATICFILES_FINDERS = [
 PLOTLY_COMPONENTS = [
     'dash_core_components',
     'dash_html_components',
-#     'dash_bootstrap_components',
+    # 'dash_bootstrap_components',
     'dash_renderer',
     'dpd_components',
 #     'dpd_static_support',
 ]
+
+# Plotly dash settings
+
+PLOTLY_DASH = {
+    "ws_route" : "ws/channel",
+    "insert_demo_migrations" : True,  # Insert model instances used by the demo
+    "http_poke_enabled" : True, # Flag controlling availability of direct-to-messaging http endpoint
+    "view_decorator" : None, # Specify a function to be used to wrap each of the dpd view functions
+    "cache_arguments" : True, # True for cache, False for session-based argument propagation
+    #"serve_locally" : True, # True to serve assets locally, False to use their unadulterated urls (eg a CDN)
+    "stateless_loader" : "home.scaffold.stateless_app_loader",
+}
