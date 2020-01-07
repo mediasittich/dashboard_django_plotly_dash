@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    'channels',
     'home.apps.HomeConfig',
 ]
 
@@ -69,8 +71,11 @@ TEMPLATES = [
     },
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstap4'
+
 WSGI_APPLICATION = 'dashboard_project.wsgi.application'
 
+ASGI_APPLICATION = 'dashboard_project.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -131,9 +136,44 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATICFILES_LOCATION = 'static'
+# STATICFILES_LOCATION = 'static'
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'dashboard_project/static')
+]
+
+# Channels config, to use channel layers
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        }
+    }
+}
+
+# Staticfiles finders for locating dash app assets and related files
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+    'django_plotly_dash.finders.DashAssetFinder',
+    'django_plotly_dash.finders.DashComponentFinder',
+    'django_plotly_dash.finders.DashAppDirectoryFinder',
+]
+
+# Plotly components containing static content that should
+# be handled by the Django staticfiles infrastructure
+
+PLOTLY_COMPONENTS = [
+    'dash_core_components',
+    'dash_html_components',
+#     'dash_bootstrap_components',
+    'dash_renderer',
+    'dpd_components',
+#     'dpd_static_support',
 ]

@@ -11,3 +11,7 @@
 [SB Admin 2 Bootstrap 4 Theme](https://startbootstrap.com/themes/sb-admin-2/)
 
 [django-plotly-dash](https://django-plotly-dash.readthedocs.io/en/latest/index.html)
+
+[daphne - Django ASGI (HTTP/WebSocket) server](https://pypi.org/project/daphne/)
+
+[How to use Django with Daphne](https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/daphne/)
